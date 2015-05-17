@@ -13,21 +13,14 @@ import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	
+	 // Obiekt m przeniesion jako zmienna globalna w ramach klasy MainActivity  
+		private MediaPlayer m;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-	}
-
-		
-	//klikniecie
-	public void klikniecie (View v)
-	{ 
-		Log.w("kotek", "do loga");
-		Toast.makeText(getApplicationContext(), "kliknales mnie", Toast.LENGTH_SHORT).show();
-		MediaPlayer m;
 		m = new MediaPlayer();
 		AssetFileDescriptor descriptor;
 		try {
@@ -40,27 +33,40 @@ public class MainActivity extends Activity {
 			
 			e.printStackTrace();
 		}
+	}
+
 		
-		try {
-			if (m.isPlaying()) {
-				m.stop();
-				Log.w("kotek", "do loga zapis o zatrzymaniu miałczenia");
-				Toast.makeText(getApplicationContext(), "Zatrzymanie miałczenia",
+	//klikniecie
+	public void klikniecie (View v)
+	{ 
+		Log.w("kotek", "do loga");
+		//Toast.makeText(getApplicationContext(), "kliknales mnie", Toast.LENGTH_SHORT).show();
+		if (m != null) // dodano if do określenie czy jest już stworzony obiekt m   
+		{
+		
+			try {
+				if (m.isPlaying()) {
+					m.stop();
+					Log.w("kotek", "do loga zapis o zatrzymaniu miałczenia");
+					Toast.makeText(getApplicationContext(), "Zatrzymanie miałczenia",
+							Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+				
+				m.prepare();
+				// m.setVolume(1f, 1f);
+				m.setLooping(true);				
+				m.start();
+				Log.w("kotek", "do loga zapis o uruchomieniu miałczenia");
+				Toast.makeText(getApplicationContext(), "Uruchomienie miałczenia",
 						Toast.LENGTH_SHORT).show();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			else
-			{
-			
-			m.prepare();
-			// m.setVolume(1f, 1f);
-			m.setLooping(true);				
-			m.start();
-			Log.w("kotek", "do loga zapis o uruchomieniu miałczenia");
-			Toast.makeText(getApplicationContext(), "Uruchomienie miałczenia",
-					Toast.LENGTH_SHORT).show();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		
+	
 	}
 }
