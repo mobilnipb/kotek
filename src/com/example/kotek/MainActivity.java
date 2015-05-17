@@ -1,6 +1,10 @@
 package com.example.kotek;
 
+import java.io.IOException;
+
 import android.app.Activity;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -23,7 +27,40 @@ public class MainActivity extends Activity {
 	{ 
 		Log.w("kotek", "do loga");
 		Toast.makeText(getApplicationContext(), "kliknales mnie", Toast.LENGTH_SHORT).show();
-		//medi
-		//MediaPlayer mp
+		MediaPlayer m;
+		m = new MediaPlayer();
+		AssetFileDescriptor descriptor;
+		try {
+			descriptor = getAssets().openFd("meow.mp3");
+			m.setDataSource(descriptor.getFileDescriptor(),
+					descriptor.getStartOffset(), descriptor.getLength());
+			descriptor.close();
+			
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+		try {
+			if (m.isPlaying()) {
+				m.stop();
+				Log.w("kotek", "do loga zapis o zatrzymaniu miałczenia");
+				Toast.makeText(getApplicationContext(), "Zatrzymanie miałczenia",
+						Toast.LENGTH_SHORT).show();
+			}
+			else
+			{
+			
+			m.prepare();
+			// m.setVolume(1f, 1f);
+			m.setLooping(true);				
+			m.start();
+			Log.w("kotek", "do loga zapis o uruchomieniu miałczenia");
+			Toast.makeText(getApplicationContext(), "Uruchomienie miałczenia",
+					Toast.LENGTH_SHORT).show();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

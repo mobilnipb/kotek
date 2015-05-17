@@ -22,7 +22,8 @@
         android:layout_below="@+id/textView1"
         android:layout_marginTop="18dp"
         android:onClick="klikniecie"
-      
+      	android:background="@drawable/kitty"
+        android:maxWidth="20dp"
         android:text="@string/button1" />
 
 </RelativeLayout>
